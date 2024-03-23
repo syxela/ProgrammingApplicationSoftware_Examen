@@ -1,0 +1,34 @@
+﻿<Window x:Class="Ex.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Ex"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="83"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto" MinHeight="86.04"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="txtQuote" Margin="5,5,5,5" TextWrapping="Wrap" Text="TextBlock"/>
+        <ListView x:Name="optionsListView" Margin="10,10,570,0" Grid.Row="1" VerticalAlignment="Top" Height="200" 
+                  SelectionMode="Single" SelectedItem="selectedChar" SelectionChanged="optionsListView_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0,5,0" Height="50">
+            <Button x:Name="btnEnterGuess" Content="Enter Guess" Click="btnEnterGuess_Click" Margin="150,0,0,0"/>
+            <Button x:Name="btnNewQuote" Content="New Quote" Margin="250,0,0,0" Width="67" Height="49" Click="btnNewQuote_Click"/>
+        </StackPanel>
+        <Image x:Name="imgChar" HorizontalAlignment="Left" Height="200"  Margin="330,10,0,0" Grid.Row="1" VerticalAlignment="Top" 
+               Width="200" Source="{Binding imagePath}"/>
+        <Label x:Name="lblScore" Content="{Binding i}" HorizontalAlignment="Left" Margin="681,32,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
