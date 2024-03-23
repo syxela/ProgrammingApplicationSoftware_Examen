@@ -28,7 +28,6 @@
             <Button x:Name="btnNewQuote" Content="New Quote" Margin="250,0,0,0" Width="67" Height="49" Click="btnNewQuote_Click"/>
         </StackPanel>
         <Image x:Name="imgChar" HorizontalAlignment="Left" Height="200"  Margin="330,10,0,0" Grid.Row="1" VerticalAlignment="Top" 
-               Width="200" Source="{Binding imagePath}"/>
-        <Label x:Name="lblScore" Content="{Binding i}" HorizontalAlignment="Left" Margin="681,32,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+               Width="200"/>
     </Grid>
 </Window>

@@ -11,8 +11,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Ex.Klassen;
 using static System.Net.WebRequestMethods;
+
 
 namespace Ex
 {
@@ -26,10 +28,12 @@ namespace Ex
         string apiUrl = "https://api.gameofthronesquotes.xyz/v1/characters";
         string apiUrl2 = "https://thronesapi.com/api/v2/Characters/";
         public string selectedChar;
+        private DispatcherTimer timer;
+
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = this;
+            InitializeTimer();
 
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -37,6 +41,12 @@ namespace Ex
             GetQuote();
         }
         string GuessCharacter;
+        private void InitializeTimer()
+        {
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(5); 
+            timer.Tick += TimerTick;
+        }
 
         public async Task GetQuote()
         {
@@ -130,11 +140,15 @@ namespace Ex
             if (GuessCharacter == correctCharacterName)
             {
                 MessageBox.Show("Right Answer!");
+                timer.Start();
+                NewTry();
                 Score(); 
             }
             else
             {
-                MessageBox.Show("You guessed wrong."); 
+                MessageBox.Show("You guessed wrong.");
+                timer.Start(); 
+                NewTry();
             }
         }
 
@@ -165,7 +179,7 @@ namespace Ex
             }
             else
             {
-                string path = "/Images/NoImage.jpg"; 
+                string path = "/images/No-Image.png"; 
                 BitmapImage bitmapImage = new BitmapImage(new Uri(path));
                 imgChar.Source = bitmapImage;
             }
@@ -198,8 +212,7 @@ namespace Ex
 
         private void btnNewQuote_Click(object sender, RoutedEventArgs e)
         {
-            imgChar.Source = null;
-            GetQuote(); 
+            NewTry(); 
 
         }
 
@@ -212,6 +225,15 @@ namespace Ex
             }
             return i;
         }
-
+        private void NewTry()
+        {
+            imgChar.Source = null;
+            GetQuote();
+        }
+        private void TimerTick(object sender, EventArgs e)
+        {
+            timer.Stop(); 
+            NewTry();
+        }
     }
     }
