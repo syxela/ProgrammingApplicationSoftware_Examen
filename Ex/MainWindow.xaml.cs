@@ -46,7 +46,7 @@ namespace Ex
         private void InitializeTimer()
         {
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(3); 
+            timer.Interval = TimeSpan.FromSeconds(2); 
             timer.Tick += TimerTick;
         }
 
@@ -253,9 +253,9 @@ namespace Ex
             {
                 Score++;
             }
-            if (Tries >= 10)
+            if (Tries >= 5)
             {
-                MessageBox.Show("You have reached the maximum number of tries. You got " + Score + " out of 10.");
+                MessageBox.Show("You have reached the maximum number of tries. You got " + Score + " out of 5.");
             }
                
         }
