@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Ex.Klassen;
 using static System.Net.WebRequestMethods;
 
 namespace Ex
@@ -35,53 +36,57 @@ namespace Ex
         {
             GetQuote();
         }
-        string GuessCharacter; 
+        string GuessCharacter;
 
-        public async void GetQuote()
+        public async Task GetQuote()
         {
-            // Haal de lijst met personages en hun quotes op
-            List<Character> characters = await GetCharactersWithQuotes();
-            // Controleer of er personages zijn opgehaald
-            if (characters != null && characters.Any())
+            try
             {
-                // Kies een willekeurig personage uit de lijst
-                Random random = new Random();
-                Character randomCharacter = characters[random.Next(characters.Count)];
-                // Kies een willekeurige quote uit de quotes van het gekozen personage
-                string randomQuote = randomCharacter.quotes[random.Next(randomCharacter.quotes.Count)];
-                // Toon de gekozen quote in de txtQuote
-                txtQuote.Text = "Quote: " + randomQuote;
+                List<Character> characters = await GetCharactersWithQuotes();
 
-                correctCharacterName = randomCharacter.name;
-                
-                //Indien correctCharacterName = Ed Stark aanpassen zodat het in verdere methodes nog gebruikt kan worden
-                if (correctCharacterName == "Eddard \\\"Ned\\\" Stark")
+                if (characters != null && characters.Any())
                 {
-                    correctCharacterName = "Ned Stark";
-                }
+                    Random random = new Random();
+                    Character randomCharacter = characters[random.Next(characters.Count)];
+                    string randomQuote = randomCharacter.quotes[random.Next(randomCharacter.quotes.Count)];
+                    txtQuote.Text = "Quote: " + randomQuote;
 
-                if (correctCharacterName == "Jaime Lannister")
-                {
-                    correctCharacterName = "Jamie Lannister";
-                }
+                    correctCharacterName = randomCharacter.name.Trim(); // Trim whitespace
 
-                if (correctCharacterName == "Bran Stark")
-                {
-                    correctCharacterName = "Brandon Stark";
+                    switch (correctCharacterName)
+                    {
+                        case "Eddard \\\"Ned\\\" Stark":
+                            correctCharacterName = "Ned Stark";
+                            break;
+                        case "Jaime Lannister":
+                            correctCharacterName = "Jamie Lannister";
+                            break;
+                        case "Bran Stark":
+                            correctCharacterName = "Brandon Stark";
+                            break;
+                        case "Lord Varys":
+                            correctCharacterName = "Varys";
+                            break;
+                        case "Ramsay Bolton":
+                            correctCharacterName = "Ramsey Bolton";
+                            break;
+                            // No default case needed since there's nothing to do for other names
+                    }
+
+                    await ShowOptions(correctCharacterName, characters);
                 }
-                if (correctCharacterName == "Lord Varys")
+                else
                 {
-                    correctCharacterName = "Varys";
+                    txtQuote.Text = "Er zijn geen personages gevonden.";
                 }
             }
-            else
+            catch (Exception ex)
             {
-                // Geen personages gevonden
-                txtQuote.Text = "Er zijn geen personages gevonden.";
+                // Handle exceptions appropriately, such as logging or displaying an error message.
+                Console.WriteLine($"An error occurred: {ex.Message}");
             }
-
-            await ShowOptions(correctCharacterName, characters);
         }
+
 
         public async Task<List<Character>> GetCharactersWithQuotes()
         {
@@ -160,7 +165,9 @@ namespace Ex
             }
             else
             {
-                MessageBox.Show($"No image found for character: {_character}");
+                string path = "/Images/NoImage.jpg"; 
+                BitmapImage bitmapImage = new BitmapImage(new Uri(path));
+                imgChar.Source = bitmapImage;
             }
         }
 
