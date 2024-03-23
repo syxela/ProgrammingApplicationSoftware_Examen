@@ -183,9 +183,9 @@ namespace Ex
             }
             else
             {
-                string path = "images/No-Image.png"; 
+                string path = "Ex/images/No-Image.png"; 
                 BitmapImage bitmapImage = new BitmapImage(new Uri(path));
-                imgChar.Source = bitmapImage;
+                imgChar.Source = bitmapImage; 
             }
         }
 
