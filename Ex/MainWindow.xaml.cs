@@ -1,4 +1,5 @@
-﻿using System.Net.Http;
+﻿using System.ComponentModel;
+using System.Net.Http;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.Json;
@@ -21,7 +22,7 @@ namespace Ex
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
         //private string _buttonClicked;
         private string correctCharacterName; // Variabele om de naam van het correcte karakter bij te houden
@@ -34,7 +35,8 @@ namespace Ex
         {
             InitializeComponent();
             InitializeTimer();
-
+            DataContext = this;
+            
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -44,7 +46,7 @@ namespace Ex
         private void InitializeTimer()
         {
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(5); 
+            timer.Interval = TimeSpan.FromSeconds(3); 
             timer.Tick += TimerTick;
         }
 
@@ -139,16 +141,18 @@ namespace Ex
 
             if (GuessCharacter == correctCharacterName)
             {
+                
                 MessageBox.Show("Right Answer!");
                 timer.Start();
-                NewTry();
-                Score(); 
+                GetScore(true); 
             }
             else
             {
+                
                 MessageBox.Show("You guessed wrong.");
-                timer.Start(); 
-                NewTry();
+                timer.Start();
+                GetScore(false); 
+                
             }
         }
 
@@ -170,7 +174,7 @@ namespace Ex
             if (imagesToShow.Any())
             {
                 CharacterImage firstImage = imagesToShow.First();
-                string imagePath = firstImage.imageUrl; // Assuming CharacterImage has a property called ImageUrl
+                string imagePath = firstImage.imageUrl; 
 
                 ImageSource imageSource = new BitmapImage(new Uri(imagePath));
 
@@ -179,7 +183,7 @@ namespace Ex
             }
             else
             {
-                string path = "/images/No-Image.png"; 
+                string path = "images/No-Image.png"; 
                 BitmapImage bitmapImage = new BitmapImage(new Uri(path));
                 imgChar.Source = bitmapImage;
             }
@@ -216,14 +220,44 @@ namespace Ex
 
         }
 
-        public int Score()
+        private int _score;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
         {
-            int i = 0;
-            while(i>11)
+            if (PropertyChanged != null)
             {
-                i++;
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
-            return i;
+        }
+
+        public int Score
+        {
+            get { return _score; }
+            set
+            {
+                if (_score != value)
+                {
+                    _score = value;
+                    OnPropertyChanged(nameof(Score));
+                }
+            }
+        }
+        public void GetScore(bool isJuist)
+        {
+            
+            int Tries = 0;
+
+            Tries++;
+            if (isJuist)
+            {
+                Score++;
+            }
+            if (Tries >= 10)
+            {
+                MessageBox.Show("You have reached the maximum number of tries. You got " + Score + " out of 10.");
+            }
+               
         }
         private void NewTry()
         {

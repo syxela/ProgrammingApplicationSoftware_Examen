@@ -15,7 +15,8 @@
 
         <TextBlock x:Name="txtQuote" Margin="5,5,5,5" TextWrapping="Wrap" Text="TextBlock"/>
         <ListView x:Name="optionsListView" Margin="10,10,570,0" Grid.Row="1" VerticalAlignment="Top" Height="200" 
-                  SelectionMode="Single" SelectedItem="selectedChar" SelectionChanged="optionsListView_SelectionChanged">
+                  SelectionMode="Single" SelectedItem="selectedChar" SelectionChanged="optionsListView_SelectionChanged"
+                  HorizontalContentAlignment="Stretch">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
@@ -29,5 +30,6 @@
         </StackPanel>
         <Image x:Name="imgChar" HorizontalAlignment="Left" Height="200"  Margin="330,10,0,0" Grid.Row="1" VerticalAlignment="Top" 
                Width="200"/>
+        <Label x:Name="lblScore" Content="{Binding Score}" HorizontalAlignment="Left" Margin="663,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" Height="50"/>
     </Grid>
 </Window>
