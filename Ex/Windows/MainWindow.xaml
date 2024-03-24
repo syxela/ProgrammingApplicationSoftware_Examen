@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ex"
         mc:Ignorable="d"
-        Title="GoT Quotes" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="GoT Quotes" Height="450" Width="800">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="83"/>
@@ -25,11 +25,11 @@
         </ListView>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" Margin="5,0,5,0" Height="50">
-            <Button x:Name="btnEnterGuess" Content="Enter Guess" Click="btnEnterGuess_Click" Margin="150,0,0,0"/>
-            <Button x:Name="btnNewQuote" Content="New Quote" Margin="250,0,0,0" Width="67" Height="49" Click="btnNewQuote_Click"/>
+            <Button x:Name="btnStart" Content="Start Quiz" Width="72" Click="btnStart_Click"/>
         </StackPanel>
-        <Image x:Name="imgChar" HorizontalAlignment="Left" Height="200"  Margin="330,10,0,0" Grid.Row="1" VerticalAlignment="Top" 
+        <Image x:Name="imgChar" HorizontalAlignment="Left" Height="200"  Margin="282,10,0,0" Grid.Row="1" VerticalAlignment="Top" 
                Width="200"/>
         <Label x:Name="lblScore" Content="{Binding Score}" HorizontalAlignment="Left" Margin="663,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" Height="50"/>
+        <Button x:Name="btnEnterGuess" Content="Enter Guess" Click="btnEnterGuess_Click" Margin="560,80,125,104" Grid.Row="1"/>
     </Grid>
 </Window>

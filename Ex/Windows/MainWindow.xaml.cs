@@ -43,10 +43,11 @@ namespace Ex
             DataContext = this;
             _userId = userId;
         }
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             GetQuote();
         }
+
         string GuessCharacter;
         private void InitializeTimer()
         {
@@ -262,6 +263,7 @@ namespace Ex
             {
                 UpdateUser(_userId, Score);
                 MessageBox.Show("You have reached the maximum number of tries. You got " + Score + " out of 5.");
+                EndGame(); 
             }
                
         }
@@ -293,5 +295,18 @@ namespace Ex
                 }
             }
         }
+
+        public void EndGame()
+        {
+            txtQuote.Text = string.Empty;
+            optionsListView.ItemsSource = null;
+            imgChar.Source = null;
+
+            
+            Tries = 0;
+            Score = 0;
+        }
+
+
     }
 }
