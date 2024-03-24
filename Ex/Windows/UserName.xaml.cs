@@ -20,10 +20,14 @@ namespace Ex.Windows
     /// </summary>
     public partial class UserName : Window
     {
+        private ScoreboardDbContext _context; // Field to store ScoreboardDbContext
+
         public UserName()
         {
             InitializeComponent();
+            
         }
+
 
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
@@ -46,7 +50,7 @@ namespace Ex.Windows
         public void StartQuiz(string username, int userId)
         {
             //Opent scherm van de quiz
-            MainWindow mainWindow = new MainWindow(username, userId);
+            MainWindow mainWindow = new MainWindow(username, userId, _context);
              
             mainWindow.Show();
         }

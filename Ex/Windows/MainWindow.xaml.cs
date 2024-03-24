@@ -35,9 +35,9 @@ namespace Ex
         
         private string _username;
         private int _userId;
-        public MainWindow(string username, int userId)
+        public MainWindow(string username, int userId, ScoreboardDbContext context)
         {
-            username = _username;
+            _username = username;
             InitializeComponent();
             InitializeTimer();
             DataContext = this;
@@ -249,26 +249,21 @@ namespace Ex
                 }
             }
         }
-        
         int Tries = 0;
         public void GetScore(bool isJuist)
         {
-            int maxTries = 5; 
-            
 
+            Tries++;
             if (isJuist)
             {
-                Score++; 
+                Score++;
             }
-
-            Tries++; 
-
-            if (Tries >= maxTries)
+            if (Tries >= 5)
             {
-                StopGame();
                 UpdateUser(_userId, Score);
-                MessageBox.Show("You have reached the maximum number of tries. You got " + Score + " out of " + maxTries + ".");
+                MessageBox.Show("You have reached the maximum number of tries. You got " + Score + " out of 5.");
             }
+               
         }
         private void NewTry()
         {
@@ -293,18 +288,10 @@ namespace Ex
                     //user's score updaten
                     updatedUser.Score = newScore;
 
-                    Score = newScore;
                     // Opslaan in Database
                     context.SaveChanges();
                 }
             }
-        }
-
-        public void StopGame()
-        {
-            txtQuote.Text = null;
-            imgChar.Source = null; 
-            optionsListView.ItemsSource = null;
         }
     }
 }
