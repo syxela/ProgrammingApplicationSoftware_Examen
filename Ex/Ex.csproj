@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <None Remove="images\No-Image.png" />
+    <None Remove="Windows\banner.jpg" />
+    <None Remove="Windows\Quiz.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +23,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="8.0.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Windows\banner.jpg" />
+    <Resource Include="Windows\Quiz.jpg" />
   </ItemGroup>
 
   <ItemGroup>

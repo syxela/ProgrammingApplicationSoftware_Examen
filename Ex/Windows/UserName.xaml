@@ -5,10 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Ex.Windows"
         mc:Ignorable="d"
-        Title="UserName" Height="450" Width="450">
+        Title="UserName" Height="359" Width="650">
     <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Windows/banner.jpg" Stretch="Fill"/>
+        </Grid.Background>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Content="Enter your name:"/>
+            <Label Content="Enter your name:" Foreground="White"/>
             <TextBox x:Name="txtUserName"/>
             <Button x:Name="btnSubmit" Content="Submit" Click="SubmitButton_Click"/>
         </StackPanel>
