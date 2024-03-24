@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using Ex.Databank;
 using Ex.Klassen;
+using Ex.Windows;
 using static System.Net.WebRequestMethods;
 
 
@@ -31,13 +32,16 @@ namespace Ex
         string apiUrl2 = "https://thronesapi.com/api/v2/Characters/";
         public string selectedChar;
         private DispatcherTimer timer;
-
-        public MainWindow()
+        
+        private string _username;
+        private int _userId;
+        public MainWindow(string username, int userId)
         {
+            username = _username;
             InitializeComponent();
             InitializeTimer();
             DataContext = this;
-            
+            _userId = userId;
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -184,9 +188,10 @@ namespace Ex
             }
             else
             {
-                string path = "Ex/images/No-Image.png"; 
-                BitmapImage bitmapImage = new BitmapImage(new Uri(path));
-                imgChar.Source = bitmapImage; 
+                //string path = "Ex/images/No-Image.png"; 
+                //BitmapImage bitmapImage = new BitmapImage(new Uri(path));
+                imgChar.Source = null; 
+                
             }
         }
 
@@ -244,28 +249,26 @@ namespace Ex
                 }
             }
         }
+        
+        int Tries = 0;
         public void GetScore(bool isJuist)
         {
+            int maxTries = 5; 
             
-            int Tries = 0;
 
-            Tries++;
             if (isJuist)
             {
-                Score++;
+                Score++; 
             }
-            if (Tries >= 5)
-            {
-                using (ScoreboardDbContext context = new ScoreboardDbContext())
-                {
-                    var newUser = new User { Score = Score };
-                    context.Users.Add(newUser);
-                    context.SaveChanges();
-                }
-                MessageBox.Show("You have reached the maximum number of tries. You got " + Score + " out of 5.");
 
+            Tries++; 
+
+            if (Tries >= maxTries)
+            {
+                StopGame();
+                UpdateUser(_userId, Score);
+                MessageBox.Show("You have reached the maximum number of tries. You got " + Score + " out of " + maxTries + ".");
             }
-               
         }
         private void NewTry()
         {
@@ -277,5 +280,31 @@ namespace Ex
             timer.Stop(); 
             NewTry();
         }
+
+        private void UpdateUser(int userId, int newScore)
+        {
+            using (ScoreboardDbContext context = new ScoreboardDbContext())
+            {
+                //Haal user's id op
+                var updatedUser = context.GetUserId(userId);
+
+                if (updatedUser != null)
+                {
+                    //user's score updaten
+                    updatedUser.Score = newScore;
+
+                    Score = newScore;
+                    // Opslaan in Database
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public void StopGame()
+        {
+            txtQuote.Text = null;
+            imgChar.Source = null; 
+            optionsListView.ItemsSource = null;
+        }
     }
-    }
+}

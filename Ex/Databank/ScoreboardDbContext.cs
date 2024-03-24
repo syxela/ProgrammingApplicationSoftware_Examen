@@ -18,5 +18,10 @@ namespace Ex.Databank
 
         public DbSet<User> Users { get; set; }
 
+        //method om id van user te krijgen
+        public User GetUserId(int userId)
+        {
+            return Users.FirstOrDefault(u => u.Id == userId);
+        }
     }
 }

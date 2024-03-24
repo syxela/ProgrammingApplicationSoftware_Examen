@@ -28,23 +28,25 @@ namespace Ex.Windows
         private void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
             var nameUser = txtUserName.Text;
-
+            int userId;
             //Zet users naam in the database
             using (ScoreboardDbContext context = new ScoreboardDbContext())
             {
+                
                 var newUser = new User { Name = nameUser, Score = 0};
+                userId = newUser.Id;
                 context.Users.Add(newUser);
                 context.SaveChanges();
             }
-            StartQuiz();
+            StartQuiz(nameUser, userId);
             //sluit dit scherm
             this.Close();
         }
 
-        public void StartQuiz()
+        public void StartQuiz(string username, int userId)
         {
             //Opent scherm van de quiz
-            MainWindow mainWindow = new MainWindow();
+            MainWindow mainWindow = new MainWindow(username, userId);
              
             mainWindow.Show();
         }
