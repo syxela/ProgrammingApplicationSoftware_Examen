@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Ex.Databank;
 using Ex.Klassen;
 using static System.Net.WebRequestMethods;
 
@@ -255,7 +256,14 @@ namespace Ex
             }
             if (Tries >= 5)
             {
+                using (ScoreboardDbContext context = new ScoreboardDbContext())
+                {
+                    var newUser = new User { Score = Score };
+                    context.Users.Add(newUser);
+                    context.SaveChanges();
+                }
                 MessageBox.Show("You have reached the maximum number of tries. You got " + Score + " out of 5.");
+
             }
                
         }
