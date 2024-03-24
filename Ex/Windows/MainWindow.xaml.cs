@@ -189,10 +189,9 @@ namespace Ex
             }
             else
             {
-                //string path = "Ex/images/No-Image.png"; 
-                //BitmapImage bitmapImage = new BitmapImage(new Uri(path));
-                imgChar.Source = null; 
-                
+                string path = "pack://application:,,,/Ex;component/images/No-Image.png";
+                BitmapImage bitmapImage = new BitmapImage(new Uri(path));
+                imgChar.Source = bitmapImage;
             }
         }
 
