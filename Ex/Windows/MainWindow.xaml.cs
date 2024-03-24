@@ -51,7 +51,7 @@ namespace Ex
         private void InitializeTimer()
         {
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(2); 
+            timer.Interval = TimeSpan.FromSeconds(1); 
             timer.Tick += TimerTick;
         }
 
@@ -281,7 +281,7 @@ namespace Ex
             using (ScoreboardDbContext context = new ScoreboardDbContext())
             {
                 //Haal user's id op
-                var updatedUser = context.GetUserId(userId);
+                var updatedUser = context.Users.FirstOrDefault(u => u.Id == userId);
 
                 if (updatedUser != null)
                 {
