@@ -32,7 +32,7 @@
         </StackPanel>
         <Image x:Name="imgChar" HorizontalAlignment="Left" Height="200"  Margin="282,10,0,0" Grid.Row="1" VerticalAlignment="Top" 
                Width="200"/>
-        <Label x:Name="lblScore" Content="{Binding Score}" HorizontalAlignment="Left" Margin="663,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" Height="50"/>
+        <Label x:Name="lblScore" Content="{Binding QuizScore}" HorizontalAlignment="Left" Margin="663,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="50" Height="50" FontWeight="Bold" FontStyle="Italic" Foreground="#FFD6D6D6"/>
         <Button x:Name="btnEnterGuess" Content="Enter Guess" Click="btnEnterGuess_Click" Margin="560,80,125,104" Grid.Row="1"/>
     </Grid>
 </Window>

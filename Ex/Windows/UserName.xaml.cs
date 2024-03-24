@@ -37,7 +37,7 @@ namespace Ex.Windows
             using (ScoreboardDbContext context = new ScoreboardDbContext())
             {
                 
-                var newUser = new User { Name = nameUser, Score = 0};
+                var newUser = new User { Name = nameUser};
                 userId = newUser.Id;
                 context.Users.Add(newUser);
                 context.SaveChanges();

@@ -237,7 +237,7 @@ namespace Ex
             }
         }
 
-        public int Score
+        public int QuizScore
         {
             get { return _score; }
             set
@@ -245,7 +245,7 @@ namespace Ex
                 if (_score != value)
                 {
                     _score = value;
-                    OnPropertyChanged(nameof(Score));
+                    OnPropertyChanged(nameof(QuizScore));
                 }
             }
         }
@@ -256,12 +256,12 @@ namespace Ex
             Tries++;
             if (isJuist)
             {
-                Score++;
+                QuizScore++;
             }
             if (Tries >= 5)
             {
-                MessageBox.Show("You have reached the maximum number of tries. You got " + Score + " out of 5.");
-                UpdateUser(_userId, Score);
+                MessageBox.Show("You have reached the maximum number of tries. You got " + QuizScore + " out of 5.");
+                UpdateUser(_userId, QuizScore);
                 
                 
             }
@@ -305,7 +305,7 @@ namespace Ex
 
             
             Tries = 0;
-            Score = 0;
+            QuizScore = 0;
         }
 
 
