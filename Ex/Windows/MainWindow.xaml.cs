@@ -261,9 +261,10 @@ namespace Ex
             }
             if (Tries >= 5)
             {
-                UpdateUser(_userId, Score);
                 MessageBox.Show("You have reached the maximum number of tries. You got " + Score + " out of 5.");
-                EndGame(); 
+                UpdateUser(_userId, Score);
+                
+                
             }
                
         }
@@ -294,6 +295,7 @@ namespace Ex
                     context.SaveChanges();
                 }
             }
+            EndGame();
         }
 
         public void EndGame()
