@@ -24,9 +24,11 @@ namespace Ex
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    // Declaratie van de MainWindow-klasse die de interactie en logica voor het hoofdvenster van de WPF-toepassing bevat
+
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        //private string _buttonClicked;
+        // Declaratie van variabelen, eigenschappen en API-URL's
         private string correctCharacterName; // Variabele om de naam van het correcte karakter bij te houden
         string apiUrl = "https://api.gameofthronesquotes.xyz/v1/characters";
         string apiUrl2 = "https://thronesapi.com/api/v2/Characters/";
@@ -35,6 +37,8 @@ namespace Ex
         
         private string _username;
         private int _userId;
+
+        // Constructor van MainWindow
         public MainWindow(string username, int userId, ScoreboardDbContext context)
         {
             _username = username;
@@ -43,11 +47,15 @@ namespace Ex
             DataContext = this;
             _userId = userId;
         }
+
+        // Event handler voor de startknop
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
             GetQuote();
         }
 
+
+        // Methode om de timer te initialiseren
         string GuessCharacter;
         private void InitializeTimer()
         {
@@ -56,6 +64,8 @@ namespace Ex
             timer.Tick += TimerTick;
         }
 
+
+        // Methode om een citaat van een personage op te halen
         public async Task GetQuote()
         {
             try
@@ -105,7 +115,7 @@ namespace Ex
             }
         }
 
-
+        // Methode om personages met citaten op te halen van een externe API
         public async Task<List<Character>> GetCharactersWithQuotes()
         {
             List<Character> characters = new List<Character>();
@@ -133,6 +143,8 @@ namespace Ex
             return characters;
         }
 
+
+        // Event handler voor wanneer een optie in de lijst wordt geselecteerd
         private void optionsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if(optionsListView.SelectedItems.Count > 0)
@@ -141,6 +153,8 @@ namespace Ex
                 ShowCharacter(selectedChar);
             }
         }
+
+        // Event handler voor wanneer de gebruiker een gok invoert
         private void btnEnterGuess_Click(object sender, RoutedEventArgs e)
         {
             GuessCharacter = selectedChar;
@@ -162,7 +176,7 @@ namespace Ex
             }
         }
 
-
+        // Methode om het beeld van een personage weer te geven
         public async void ShowCharacter(string _character)
         {
 
@@ -195,6 +209,7 @@ namespace Ex
             }
         }
 
+        // Methode om opties weer te geven voor het raden van het juiste personage
         private async Task ShowOptions(string correctCharacterName, List<Character> characters)
         {
             List<string> Options = new List<string>();
@@ -220,6 +235,8 @@ namespace Ex
             optionsListView.ItemsSource = Options;
         }
 
+
+        // Event handler voor wanneer de gebruiker een nieuw citaat wil
         private void btnNewQuote_Click(object sender, RoutedEventArgs e)
         {
             NewTry(); 
@@ -237,6 +254,8 @@ namespace Ex
             }
         }
 
+
+        // Eigenschap om de score van de quiz bij te houden
         public int QuizScore
         {
             get { return _score; }
@@ -250,6 +269,9 @@ namespace Ex
             }
         }
         int Tries = 0;
+
+
+        // Methode om de score bij te houden en te controleren op maximale pogingen
         public void GetScore(bool isJuist)
         {
 
@@ -265,19 +287,24 @@ namespace Ex
                 
                 
             }
-               
         }
+
+        // Methode om een nieuwe poging te starten
         private void NewTry()
         {
             imgChar.Source = null;
             GetQuote();
         }
+
+        // Event handler voor wanneer de timer afloopt
         private void TimerTick(object sender, EventArgs e)
         {
             timer.Stop(); 
             NewTry();
         }
 
+
+        // Methode om de gebruikersscore in de database bij te werken
         private void UpdateUser(int userId, int newScore)
         {
             using (ScoreboardDbContext context = new ScoreboardDbContext())
@@ -297,6 +324,8 @@ namespace Ex
             EndGame();
         }
 
+
+        // Methode om het einde van het spel aan te kondigen en de UI te resetten
         public void EndGame()
         {
             txtQuote.Text = string.Empty;
